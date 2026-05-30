@@ -9,8 +9,6 @@ import type {
   InvoiceItemInsertPayload,
 } from '@/types';
 
-// Admin client bypasses RLS — safe here because we verify
-// ownership via auth.getUser() before any write
 const adminClient = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -49,10 +47,9 @@ export async function createInvoice(params: {
       status: 'Pending',
     };
 
-    // Use authenticated client for the invoice row (RLS enforced)
     const { data: invoice, error: invoiceError } = await supabase
       .from('invoices')
-      .insert(insertPayload satisfies InvoiceInsertPayload)
+      .insert(insertPayload)
       .select('id, public_sharing_token')
       .single();
 
@@ -70,7 +67,6 @@ export async function createInvoice(params: {
       }));
 
     if (itemRows.length > 0) {
-      // Use admin client for invoice_items — ownership already verified above
       const { error: itemsError } = await adminClient
         .from('invoice_items')
         .insert(itemRows);
@@ -78,6 +74,19 @@ export async function createInvoice(params: {
       if (itemsError) {
         return { error: itemsError.message };
       }
+    }
+
+    const totalAmountPaise = params.items
+      .filter((item) => item.description.trim() !== '')
+      .reduce((sum, item) => sum + item.quantity * Math.round(item.rate * 100), 0);
+
+    const { error: updateError } = await supabase
+      .from('invoices')
+      .update({ total_amount_paise: totalAmountPaise })
+      .eq('id', invoice.id);
+
+    if (updateError) {
+      return { error: updateError.message };
     }
 
     return { sharingToken: invoice.public_sharing_token as string };

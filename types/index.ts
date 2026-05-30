@@ -1,3 +1,4 @@
+// types/index
 // ─── Line item as used in the UI layer ───────────────────────────────────────
 // rate is in major currency units (e.g. dollars/rupees) in the UI.
 // The DB layer converts to minor units (cents/paise) on write and back on read.
@@ -29,6 +30,7 @@ export interface InvoiceData {
   items: LineItem[];
   invoice_items?: InvoiceItem[];
   status: 'Pending' | 'Paid';
+  total_amount_paise: number;
   created_at: string;
 }
 
@@ -40,6 +42,12 @@ export interface Profile {
   company_logo_url: string | null;
   last_invoice_sequence: number;
   updated_at: string;
+
+  // Payout settings (encrypted at rest; never expose raw values to client)
+  encrypted_razorpay_key_id: string | null;
+  encrypted_razorpay_key_secret: string | null;
+  user_upi_id: string | null;
+  payout_configured: boolean; // generated column
 }
 
 // ─── Local React state for the invoice creation form ─────────────────────────
@@ -65,6 +73,7 @@ export type InvoiceInsertPayload = {
   client_name: string;
   client_email: string;
   status: 'Pending';
+  total_amount_paise?: number;
 };
 
 // ─── Payload for inserting a row into invoice_items ──────────────────────────
@@ -74,4 +83,13 @@ export type InvoiceItemInsertPayload = {
   description: string;
   quantity: number;
   rate: number;
+};
+
+// ─── Payload for storing payout settings (server-side only) ──────────────────
+// Used exclusively in Server Actions — never sent to the client raw
+export type PayoutSettingsPayload = {
+  user_id: string;
+  encrypted_razorpay_key_id: string;
+  encrypted_razorpay_key_secret: string;
+  user_upi_id?: string;
 };

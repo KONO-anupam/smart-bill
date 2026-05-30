@@ -1,3 +1,4 @@
+// lib/generateInvoiceNumber
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
 /**

@@ -1,6 +1,8 @@
+// components/InvoicePreview
 "use client";
 
 import type { InvoiceFormState, Profile } from "@/types";
+import Image from "next/image";
 
 interface InvoicePreviewProps {
   invoiceData: InvoiceFormState;
@@ -40,45 +42,48 @@ export default function InvoicePreview({
   );
 
   return (
-    <div className="print:block bg-white shadow-lg rounded-xl max-w-2xl mx-auto font-sans text-black p-10">
+    <div className="print:block bg-white rounded-xl max-w-2xl mx-auto font-sans text-black p-10 border border-slate-100">
+
       {/* ── HEADER ── */}
       <div className="flex items-start justify-between mb-10">
-        {/* Company info */}
         <div className="flex items-center gap-3">
           {profile?.company_logo_url && (
-            <img
+            <Image
               src={profile.company_logo_url}
-              alt="Company logo"
+              alt={`${profile.company_name ?? "Company"} logo`}
+              width={48}
+              height={48}
               className="max-h-12 w-auto object-contain"
             />
           )}
           <div>
-            <p className="text-2xl font-bold text-black leading-tight">
-              {profile?.company_name || (
-                <span className="text-slate-400 italic font-normal text-base">
-                  Your Company
-                </span>
-              )}
-            </p>
+            {profile?.company_name ? (
+              <p className="text-2xl font-black text-black leading-tight tracking-tight">
+                {profile.company_name}
+              </p>
+            ) : (
+              <p className="text-xl italic text-slate-300 font-normal">
+                Your Company
+              </p>
+            )}
             {profile?.company_email && (
-              <p className="text-sm text-slate-500 mt-0.5">
+              <p className="text-sm text-slate-400 mt-0.5">
                 {profile.company_email}
               </p>
             )}
           </div>
         </div>
 
-        {/* Invoice meta */}
         <div className="text-right">
-          <p className="text-3xl font-black uppercase tracking-widest text-black">
+          <p className="text-4xl font-black uppercase tracking-[0.15em] text-black">
             Invoice
           </p>
           {invoiceNumber ? (
-            <p className="text-sm font-mono text-slate-600 mt-1">
+            <p className="text-sm font-mono text-slate-500 mt-1.5">
               {invoiceNumber}
             </p>
           ) : (
-            <p className="text-sm font-mono text-slate-400 mt-1 italic">
+            <p className="text-sm font-mono text-slate-300 mt-1.5 italic">
               PREVIEW
             </p>
           )}
@@ -86,24 +91,27 @@ export default function InvoicePreview({
         </div>
       </div>
 
+      {/* ── DIVIDER ── */}
+      <div className="h-px w-full bg-slate-100 mb-8" />
+
       {/* ── BILL TO ── */}
-      <div className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">
+      <div className="mb-10">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-2">
           Bill To
         </p>
         {invoiceData.clientName ? (
-          <p className="text-lg font-bold text-black leading-tight">
+          <p className="text-xl font-bold text-black leading-tight">
             {invoiceData.clientName}
           </p>
         ) : (
-          <p className="text-base italic text-slate-400">Client name</p>
+          <p className="text-base italic text-slate-300">Client name</p>
         )}
         {invoiceData.clientEmail ? (
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-400 mt-0.5">
             {invoiceData.clientEmail}
           </p>
         ) : (
-          <p className="text-sm italic text-slate-400 mt-0.5">
+          <p className="text-sm italic text-slate-300 mt-0.5">
             client@email.com
           </p>
         )}
@@ -111,39 +119,35 @@ export default function InvoicePreview({
 
       {/* ── LINE ITEMS TABLE ── */}
       <div className="mb-8 overflow-hidden rounded-lg border border-slate-200">
-        {/* Table header */}
-        <div className="grid grid-cols-12 bg-black text-white text-xs font-semibold uppercase tracking-wider px-4 py-3">
+        <div className="grid grid-cols-12 bg-black text-white text-[10px] font-bold uppercase tracking-[0.12em] px-4 py-3">
           <span className="col-span-6">Description</span>
           <span className="col-span-2 text-center">Qty</span>
           <span className="col-span-2 text-right">Rate</span>
           <span className="col-span-2 text-right">Total</span>
         </div>
 
-        {/* Table rows */}
         {validItems.length > 0 ? (
           validItems.map((item, index) => (
             <div
               key={index}
-              className={`grid grid-cols-12 px-4 py-3 text-sm ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
+              className={`grid grid-cols-12 px-4 py-3.5 text-sm border-b border-slate-100 last:border-b-0 ${
+                index % 2 === 0 ? "bg-white" : "bg-slate-50/70"
               }`}
             >
-              <span className="col-span-6 text-slate-800 truncate">
-                {item.description}
-              </span>
-              <span className="col-span-2 text-center text-slate-600">
+              <span className="col-span-6 text-slate-800">{item.description}</span>
+              <span className="col-span-2 text-center text-slate-500">
                 {item.quantity}
               </span>
-              <span className="col-span-2 text-right text-slate-600">
+              <span className="col-span-2 text-right text-slate-500">
                 {formatCurrency(item.rate)}
               </span>
-              <span className="col-span-2 text-right font-medium text-slate-900">
+              <span className="col-span-2 text-right font-semibold text-slate-900">
                 {formatCurrency(item.quantity * item.rate)}
               </span>
             </div>
           ))
         ) : (
-          <div className="px-4 py-6 text-center text-sm italic text-slate-400 bg-white">
+          <div className="px-4 py-7 text-center text-sm italic text-slate-300 bg-white">
             No items added yet
           </div>
         )}
@@ -152,19 +156,19 @@ export default function InvoicePreview({
       {/* ── TOTALS ── */}
       <div className="flex justify-end mb-10">
         <div className="w-64 flex flex-col gap-2 text-sm">
-          <div className="flex justify-between text-slate-600">
+          <div className="flex justify-between text-slate-400">
             <span>Subtotal</span>
             <span>{formatCurrency(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-slate-600">
+          <div className="flex justify-between text-slate-400">
             <span>Tax (0%)</span>
             <span>{formatCurrency(0)}</span>
           </div>
-          <div className="flex justify-between items-center pt-3 border-t-2 border-black">
-            <span className="text-base font-bold text-black uppercase tracking-wide">
+          <div className="flex justify-between items-baseline pt-3 border-t-2 border-black mt-1">
+            <span className="text-sm font-bold text-black uppercase tracking-wider">
               Total Due
             </span>
-            <span className="text-xl font-black text-black">
+            <span className="text-2xl font-black text-black">
               {formatCurrency(subtotal)}
             </span>
           </div>
@@ -172,7 +176,7 @@ export default function InvoicePreview({
       </div>
 
       {/* ── FOOTER ── */}
-      <div className="border-t border-slate-200 pt-6 text-center">
+      <div className="border-t border-slate-100 pt-6 text-center">
         <p className="text-xs italic text-slate-400">
           Thank you for your business.
         </p>

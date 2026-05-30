@@ -1,3 +1,4 @@
+// lib/email/sendReceipt
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -99,7 +100,7 @@ export async function sendReceiptEmail(params: {
             <td style="background-color: #fafafa; border-top: 1px solid #e4e4e7; padding: 24px 40px; text-align: center;">
               <p style="margin: 0; font-size: 12px; color: #a1a1aa; line-height: 1.6;">
                 This is an automated receipt. Please retain for your records.<br />
-                Powered by InvoiceFlow
+                Powered by SmartBill
               </p>
             </td>
           </tr>

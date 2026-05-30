@@ -1,3 +1,4 @@
+// lib/parseInvoiceText
 import type { ParsedInvoiceText, LineItem } from "@/types";
 
 function stripCommas(value: string): string {

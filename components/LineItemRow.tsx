@@ -1,3 +1,4 @@
+// components/LineItemRow
 "use client";
 
 import type { LineItem } from "@/types";
@@ -32,14 +33,14 @@ export default function LineItemRow({
   }
 
   return (
-    <div className="flex items-center gap-2 bg-slate-50 rounded-md px-3 py-2">
+    <div className="flex items-center gap-2 border border-slate-200 bg-white rounded-lg px-3 py-2.5">
       {/* Description */}
       <input
         type="text"
         value={item.description}
         onChange={(e) => handleDescriptionChange(e.target.value)}
         placeholder="Item description"
-        className="flex-1 min-w-0 bg-white border border-slate-200 rounded-md px-2 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-black transition"
+        className="flex-1 min-w-0 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
       />
 
       {/* Quantity */}
@@ -48,7 +49,7 @@ export default function LineItemRow({
         min={1}
         value={item.quantity}
         onChange={(e) => handleQuantityChange(e.target.value)}
-        className="w-16 bg-white border border-slate-200 rounded-md px-2 py-1.5 text-sm text-slate-900 text-center focus:outline-none focus:ring-2 focus:ring-black transition"
+        className="w-14 border border-slate-200 rounded-md px-2 py-1 text-sm text-slate-700 text-center bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
       />
 
       {/* Rate */}
@@ -62,12 +63,12 @@ export default function LineItemRow({
           step={0.01}
           value={item.rate}
           onChange={(e) => handleRateChange(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-md pl-5 pr-2 py-1.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-black transition"
+          className="w-full border border-slate-200 rounded-md pl-5 pr-2 py-1 text-sm text-slate-700 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
         />
       </div>
 
       {/* Row total */}
-      <span className="w-20 text-right text-sm text-slate-500 font-medium shrink-0">
+      <span className="w-20 text-right text-sm text-slate-400 font-medium shrink-0 tabular-nums">
         {rowTotal.toLocaleString("en-US", {
           style: "currency",
           currency: "USD",
@@ -77,7 +78,7 @@ export default function LineItemRow({
       {/* Remove */}
       <button
         onClick={() => onRemove(index)}
-        className="text-red-400 hover:text-red-600 font-bold text-base leading-none px-1 transition shrink-0"
+        className="text-slate-300 hover:text-red-500 font-bold text-lg leading-none px-1 transition-colors shrink-0"
         aria-label="Remove item"
       >
         ×

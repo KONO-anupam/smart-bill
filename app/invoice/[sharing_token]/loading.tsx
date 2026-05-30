@@ -1,124 +1,74 @@
-export default function InvoicePortalLoading() {
+export default function NewInvoiceLoading() {
   return (
-    <div className="min-h-screen bg-neutral-100">
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-slate-100">
 
-      {/* Top bar skeleton */}
-      <header className="sticky top-0 z-20 bg-white border-b border-neutral-200">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="h-5 w-28 bg-neutral-200 rounded animate-pulse shrink-0" />
-          <div className="h-4 w-32 bg-neutral-100 rounded animate-pulse" />
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="h-9 w-36 bg-neutral-200 rounded-md animate-pulse" />
-            <div className="h-9 w-28 bg-neutral-200 rounded-md animate-pulse" />
-          </div>
+      {/* ── LEFT PANEL skeleton ── */}
+      <div className="w-full md:w-[48%] h-full overflow-y-auto bg-white border-r border-slate-200">
+
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-8 pt-6 pb-4 border-b border-slate-100">
+          <div className="h-4 w-28 bg-slate-200 rounded animate-pulse" />
+          <div className="h-4 w-24 bg-slate-200 rounded animate-pulse" />
         </div>
-      </header>
 
-      {/* Timeline skeleton */}
-      <div className="max-w-5xl mx-auto px-4 pt-6 pb-2">
-        <div className="bg-white border border-neutral-200 rounded-xl px-6 py-5">
-          <div className="flex items-start justify-between relative">
+        <div className="flex flex-col gap-8 px-8 py-7">
 
-            {/* Connector line */}
-            <div className="absolute top-4 left-[calc(16.67%)] right-[calc(16.67%)] h-0.5 bg-neutral-100 z-0" />
+          {/* Smart Import */}
+          <div>
+            <div className="h-2.5 w-24 bg-slate-200 rounded animate-pulse mb-3" />
+            <div className="h-28 w-full bg-slate-100 rounded-xl animate-pulse" />
+            <div className="h-9 w-28 bg-slate-100 rounded-lg animate-pulse mt-3" />
+          </div>
 
-            {/* Step 1 */}
-            <div className="flex flex-col items-center gap-2 w-1/3 text-center z-10">
-              <div className="h-8 w-8 rounded-full bg-neutral-200 animate-pulse" />
-              <div className="h-3 w-20 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-2.5 w-16 bg-neutral-100 rounded animate-pulse" />
+          {/* Client Details */}
+          <div>
+            <div className="h-2.5 w-28 bg-slate-200 rounded animate-pulse mb-4" />
+            <div className="flex flex-col gap-3">
+              <div>
+                <div className="h-3 w-20 bg-slate-200 rounded animate-pulse mb-2" />
+                <div className="h-10 w-full bg-slate-100 rounded-lg animate-pulse" />
+              </div>
+              <div>
+                <div className="h-3 w-24 bg-slate-200 rounded animate-pulse mb-2" />
+                <div className="h-10 w-full bg-slate-100 rounded-lg animate-pulse" />
+              </div>
             </div>
+          </div>
 
-            {/* Step 2 */}
-            <div className="flex flex-col items-center gap-2 w-1/3 text-center z-10">
-              <div className="h-8 w-8 rounded-full bg-neutral-200 animate-pulse" />
-              <div className="h-3 w-20 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-2.5 w-16 bg-neutral-100 rounded animate-pulse" />
+          {/* Line Items */}
+          <div>
+            <div className="h-2.5 w-20 bg-slate-200 rounded animate-pulse mb-4" />
+            <div className="flex flex-col gap-2">
+              {[0, 1].map((i) => (
+                <div
+                  key={i}
+                  className="flex gap-2 border border-slate-200 bg-white rounded-lg px-3 py-2.5 animate-pulse"
+                >
+                  <div className="flex-1 h-7 bg-slate-100 rounded-md" />
+                  <div className="w-14 h-7 bg-slate-100 rounded-md" />
+                  <div className="w-24 h-7 bg-slate-100 rounded-md" />
+                  <div className="w-20 h-7 bg-slate-100 rounded-md" />
+                  <div className="w-5 h-7 bg-slate-100 rounded" />
+                </div>
+              ))}
             </div>
+            <div className="h-10 w-full border border-dashed border-slate-200 rounded-xl animate-pulse mt-3" />
+          </div>
 
-            {/* Step 3 */}
-            <div className="flex flex-col items-center gap-2 w-1/3 text-center z-10">
-              <div className="h-8 w-8 rounded-full bg-neutral-100 animate-pulse border-2 border-neutral-200" />
-              <div className="h-3 w-24 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-2.5 w-20 bg-neutral-100 rounded animate-pulse" />
+          {/* Total & Generate */}
+          <div>
+            <div className="flex justify-between items-center mb-5 pt-4 border-t border-slate-100">
+              <div className="h-4 w-10 bg-slate-200 rounded animate-pulse" />
+              <div className="h-7 w-24 bg-slate-200 rounded animate-pulse" />
             </div>
+            <div className="h-14 w-full bg-slate-900 rounded-xl animate-pulse opacity-10" />
           </div>
         </div>
       </div>
 
-      {/* Invoice preview card skeleton */}
-      <div className="max-w-3xl mx-auto py-8 px-4">
-        <div className="bg-white shadow-lg rounded-xl p-10">
-
-          {/* Invoice header row */}
-          <div className="flex justify-between items-start mb-10">
-            <div className="flex flex-col gap-2">
-              <div className="h-6 w-40 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-3.5 w-28 bg-neutral-100 rounded animate-pulse" />
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <div className="h-7 w-24 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-3.5 w-20 bg-neutral-100 rounded animate-pulse" />
-              <div className="h-3 w-24 bg-neutral-100 rounded animate-pulse" />
-            </div>
-          </div>
-
-          {/* Bill to section */}
-          <div className="mb-8">
-            <div className="h-3 w-14 bg-neutral-100 rounded animate-pulse mb-3" />
-            <div className="h-5 w-36 bg-neutral-200 rounded animate-pulse mb-1.5" />
-            <div className="h-3.5 w-44 bg-neutral-100 rounded animate-pulse" />
-          </div>
-
-          {/* Divider */}
-          <div className="h-px w-full bg-neutral-100 mb-6" />
-
-          {/* Line items table header */}
-          <div className="grid grid-cols-4 gap-4 bg-neutral-900 rounded-md px-4 py-2.5 mb-2">
-            {[60, 16, 16, 16].map((w, i) => (
-              <div
-                key={i}
-                className={`h-3 bg-neutral-700 rounded animate-pulse`}
-                style={{ width: `${w}%` }}
-              />
-            ))}
-          </div>
-
-          {/* Line item rows */}
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`grid grid-cols-4 gap-4 px-4 py-3 ${i % 2 === 0 ? 'bg-neutral-50' : 'bg-white'} rounded`}
-            >
-              <div className="h-3 bg-neutral-200 rounded animate-pulse" style={{ width: '75%' }} />
-              <div className="h-3 bg-neutral-100 rounded animate-pulse" style={{ width: '40%' }} />
-              <div className="h-3 bg-neutral-100 rounded animate-pulse" style={{ width: '50%' }} />
-              <div className="h-3 bg-neutral-200 rounded animate-pulse" style={{ width: '60%' }} />
-            </div>
-          ))}
-
-          {/* Total section */}
-          <div className="mt-8 flex flex-col items-end gap-2">
-            <div className="flex gap-8">
-              <div className="h-3 w-16 bg-neutral-100 rounded animate-pulse" />
-              <div className="h-3 w-20 bg-neutral-100 rounded animate-pulse" />
-            </div>
-            <div className="flex gap-8">
-              <div className="h-3 w-16 bg-neutral-100 rounded animate-pulse" />
-              <div className="h-3 w-12 bg-neutral-100 rounded animate-pulse" />
-            </div>
-            <div className="h-px w-48 bg-neutral-200 my-1" />
-            <div className="flex gap-8 items-center">
-              <div className="h-4 w-20 bg-neutral-200 rounded animate-pulse" />
-              <div className="h-6 w-28 bg-neutral-300 rounded animate-pulse" />
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-10 flex justify-center">
-            <div className="h-3 w-48 bg-neutral-100 rounded animate-pulse" />
-          </div>
-        </div>
+      {/* ── RIGHT PANEL skeleton ── */}
+      <div className="w-full md:w-[52%] h-full bg-slate-100 px-8 py-10">
+        <div className="bg-white rounded-xl border border-slate-100 max-w-2xl mx-auto h-170 animate-pulse" />
       </div>
     </div>
   );
